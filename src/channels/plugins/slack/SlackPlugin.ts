@@ -7,7 +7,7 @@
 import { App, LogLevel } from '@slack/bolt';
 import type { BotInfo, IChannelPluginConfig, IUnifiedOutgoingMessage, PluginType } from '../../types';
 import { BasePlugin } from '../BasePlugin';
-import { splitMessage, SLACK_MESSAGE_LIMIT, toSlackMessageParams, toUnifiedIncomingMessage, toUnifiedUser } from './SlackAdapter';
+import { splitMessage, SLACK_MESSAGE_LIMIT, toSlackMessageParams, toUnifiedIncomingMessage } from './SlackAdapter';
 
 /**
  * SlackPlugin - Slack Bot integration for Personal Assistant
@@ -192,7 +192,7 @@ export class SlackPlugin extends BasePlugin {
     if (!this.app) return;
 
     // Handle messages in channels/DMs (not threads)
-    this.app.message(async ({ message, say, client }) => {
+    this.app.message(async ({ message }) => {
       try {
         // Filter out bot messages and threaded messages
         if ((message as any).subtype || (message as any).thread_ts) {
@@ -206,7 +206,7 @@ export class SlackPlugin extends BasePlugin {
     });
 
     // Handle app mentions (@bot)
-    this.app.event('app_mention', async ({ event, say, client }) => {
+    this.app.event('app_mention', async ({ event }) => {
       try {
         await this.handleMessage(event);
       } catch (error) {
@@ -215,7 +215,7 @@ export class SlackPlugin extends BasePlugin {
     });
 
     // Handle button actions
-    this.app.action(/^button_(.*)/, async ({ action, ack, body, client }) => {
+    this.app.action(/^button_(.*)/, async ({ action, ack, body }) => {
       try {
         // Acknowledge the action
         await ack();
@@ -273,11 +273,11 @@ export class SlackPlugin extends BasePlugin {
       const channel = body.channel?.id;
 
       // Parse action value
-      const category = actionValue.split(':')[0];
+      const parts = actionValue.split(':');
+      const category = parts[0];
 
       // Handle tool confirmation
       if (category === 'confirm') {
-        const parts = actionValue.split(':');
         if (parts.length >= 3 && this.confirmHandler) {
           const callId = parts[1];
           const value = parts.slice(2).join(':');
@@ -351,9 +351,21 @@ export class SlackPlugin extends BasePlugin {
 
   /**
    * Test connection with provided credentials
+   * Note: For Slack, we need both botToken and appToken, but the base signature only accepts one token
+   * We'll use the token parameter for botToken and require appToken to be configured
    */
-  static async testConnection(botToken: string, appToken: string): Promise<boolean> {
+  static async testConnection(token: string): Promise<{ success: boolean; botUsername?: string; error?: string }> {
     try {
+      // For Slack testing, token should be in format "botToken:appToken"
+      const [botToken, appToken] = token.includes(':') ? token.split(':') : [token, ''];
+
+      if (!botToken || !appToken) {
+        return {
+          success: false,
+          error: 'Both bot token and app token are required. Use format: botToken:appToken',
+        };
+      }
+
       const testApp = new App({
         token: botToken,
         appToken: appToken,
@@ -363,10 +375,16 @@ export class SlackPlugin extends BasePlugin {
 
       // Test authentication
       const result = await testApp.client.auth.test();
-      return result.ok === true;
+      return {
+        success: result.ok === true,
+        botUsername: result.user as string,
+      };
     } catch (error) {
       console.error('[SlackPlugin] Connection test failed:', error);
-      return false;
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : String(error),
+      };
     }
   }
 }

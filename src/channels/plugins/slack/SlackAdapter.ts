@@ -4,13 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import type {
-  IUnifiedIncomingMessage,
-  IUnifiedMessageContent,
-  IUnifiedOutgoingMessage,
-  IUnifiedUser,
-  IUnifiedAttachment,
-} from '../../types';
+import type { IUnifiedIncomingMessage, IUnifiedMessageContent, IUnifiedOutgoingMessage, IUnifiedUser, IUnifiedAttachment } from '../../types';
 
 /**
  * SlackAdapter - Converts between Slack and Unified message formats
@@ -177,19 +171,21 @@ export function toSlackMessageParams(message: IUnifiedOutgoingMessage): {
     },
   ];
 
-  // Add action buttons
+  // Add action buttons (flatten the 2D array)
   const actions: any[] = [];
-  for (const button of message.buttons) {
-    actions.push({
-      type: 'button',
-      text: {
-        type: 'plain_text',
-        text: button.text,
-        emoji: true,
-      },
-      value: button.data,
-      action_id: `button_${button.data}`,
-    });
+  for (const row of message.buttons) {
+    for (const button of row) {
+      actions.push({
+        type: 'button',
+        text: {
+          type: 'plain_text',
+          text: button.label,
+          emoji: true,
+        },
+        value: button.action,
+        action_id: `button_${button.action}`,
+      });
+    }
   }
 
   if (actions.length > 0) {
