@@ -5,6 +5,7 @@ AionUi supports WebUI mode, allowing you to access the application through a web
 ## Table of Contents
 
 - [What is WebUI Mode?](#what-is-webui-mode)
+- [View All UI Pages (Development)](#view-all-ui-pages-development)
 - [Windows](#windows)
 - [macOS](#macos)
 - [Linux](#linux)
@@ -23,6 +24,50 @@ WebUI mode starts AionUi with an embedded web server, allowing you to:
 - Run the application headless on servers
 
 Default access URL: `http://localhost:3000` (port may vary, check the application output)
+
+---
+
+## View All UI Pages (Development)
+
+If you want to run AionUi locally and navigate all UI pages:
+
+1. Install dependencies
+
+```bash
+npm ci
+```
+
+2. Start the app in development mode
+
+```bash
+npm start
+```
+
+3. Open the WebUI server (optional, for browser access)
+
+```bash
+npm run webui
+```
+
+Then open `http://localhost:3000` in your browser.
+
+### Page Routes
+
+AionUi uses hash routes (`/#/...`). After login, you can visit:
+
+- `/#/guid` - Welcome / main entry page
+- `/#/conversation/:id` - Conversation page (requires an existing conversation id)
+- `/#/settings/gemini` - Gemini settings
+- `/#/settings/model` - Model settings
+- `/#/settings/agent` - Agent settings
+- `/#/settings/display` - Display settings
+- `/#/settings/webui` - WebUI settings
+- `/#/settings/system` - System settings
+- `/#/settings/about` - About page
+- `/#/settings/tools` - Tools settings
+- `/#/test/components` - Components showcase (UI test page)
+
+If not authenticated, routes redirect to `/#/login`.
 
 ---
 
