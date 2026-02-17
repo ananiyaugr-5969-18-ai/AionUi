@@ -6,6 +6,97 @@
   margin: 0 auto;
 }
 
+.workspaceHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.workspaceHeaderPill {
+  border: 1px solid #e5e5e5 !important;
+  background: #ffffff !important;
+  color: #4a4a4a !important;
+}
+
+.agentHero {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.agentHeroIcon {
+  width: 84px;
+  height: 84px;
+  margin: 0 auto 12px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  place-items: center;
+}
+
+.agentHeroPixel {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: #e85d26;
+}
+
+.agentHeroTitle {
+  margin: 0;
+  font-size: 34px;
+  font-family: Georgia, 'Times New Roman', serif;
+  color: #1a1a1a;
+}
+
+.agentHeroDescription {
+  max-width: 600px;
+  margin: 10px auto 0;
+  color: #4a4a4a;
+  line-height: 1.6;
+}
+
+.agentHeroSubLabel {
+  margin: 14px 0 0;
+  font-size: 12px;
+  color: #8e8e8e;
+}
+
+.promptCardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.promptCard {
+  width: 100%;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  background: #fff;
+  color: #4a4a4a;
+  text-align: left;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.promptCardIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: #00594c;
+  background: #f3f8f7;
+}
+
 .guidInputCard {
   width: 100%;
   box-sizing: border-box;
@@ -60,6 +151,10 @@
     padding: 0 16px;
     padding-bottom: 100px; /* 为底部快捷按钮留出空间 */
     box-sizing: border-box;
+  }
+
+  .promptCardGrid {
+    grid-template-columns: 1fr;
   }
 
   .guidInputCard {

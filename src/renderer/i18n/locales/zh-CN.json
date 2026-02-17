@@ -1334,5 +1334,13 @@
       "configureFirst": "请先在设置中配置一个 Agent。",
       "switching": "正在切换 Agent..."
     }
-  }
+  },
+  "guid.dashboard.agentHistory": "Agent 历史",
+  "guid.dashboard.configuration": "配置",
+  "guid.dashboard.followUpAgent": "跟进 Agent",
+  "guid.dashboard.followUpDescription": "这个 Agent 会发送个性化跟进邮件、会议提醒与摘要，帮助每个线索推进到下一步。",
+  "guid.dashboard.suggestedPrompt": "今日推荐提示词",
+  "guid.dashboard.promptClientCalls": "总结昨天的客户通话并列出高优先级跟进行动。",
+  "guid.dashboard.promptFollowUpEmail": "向本周索取报价详情的所有线索发送跟进邮件。",
+  "guid.dashboard.promptPersonalizedMeetings": "为活跃商机创建个性化的后续会议建议。"
 }

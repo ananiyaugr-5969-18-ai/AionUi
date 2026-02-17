@@ -1188,5 +1188,13 @@
       "configureFirst": "먼저 설정에서 에이전트를 구성하세요.",
       "switching": "에이전트 전환 중..."
     }
-  }
+  },
+  "guid.dashboard.agentHistory": "에이전트 기록",
+  "guid.dashboard.configuration": "설정",
+  "guid.dashboard.followUpAgent": "후속 조치 에이전트",
+  "guid.dashboard.followUpDescription": "이 에이전트는 개인화된 후속 이메일, 미팅 알림, 요약을 생성하여 모든 리드가 다음 단계로 진행되도록 돕습니다.",
+  "guid.dashboard.suggestedPrompt": "오늘의 추천 프롬프트",
+  "guid.dashboard.promptClientCalls": "어제의 고객 통화를 요약하고 우선순위가 높은 후속 조치 항목을 정리해 주세요.",
+  "guid.dashboard.promptFollowUpEmail": "이번 주 가격 정보를 요청한 모든 리드에게 후속 이메일을 보내 주세요.",
+  "guid.dashboard.promptPersonalizedMeetings": "진행 중인 기회에 맞춘 개인화된 후속 미팅 제안을 만들어 주세요."
 }

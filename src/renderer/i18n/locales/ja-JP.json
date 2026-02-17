@@ -1133,5 +1133,13 @@
       "configureFirst": "まず設定でエージェントを設定してください。",
       "switching": "エージェントを切り替え中..."
     }
-  }
+  },
+  "guid.dashboard.agentHistory": "エージェント履歴",
+  "guid.dashboard.configuration": "設定",
+  "guid.dashboard.followUpAgent": "フォローアップエージェント",
+  "guid.dashboard.followUpDescription": "このエージェントは、パーソナライズされたフォローアップメール、会議リマインダー、要約を作成し、各リードの次のアクションを支援します。",
+  "guid.dashboard.suggestedPrompt": "本日のおすすめプロンプト",
+  "guid.dashboard.promptClientCalls": "昨日の顧客通話を要約し、優先度の高いフォローアップ項目を整理してください。",
+  "guid.dashboard.promptFollowUpEmail": "今週価格情報を求めたすべてのリードにフォローアップメールを送ってください。",
+  "guid.dashboard.promptPersonalizedMeetings": "進行中の案件向けに、パーソナライズされた次回ミーティング案を作成してください。"
 }
