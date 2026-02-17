@@ -12,5 +12,9 @@ export { TelegramPlugin } from './telegram/TelegramPlugin';
 export * from './telegram/TelegramAdapter';
 export * from './telegram/TelegramKeyboards';
 
+// Slack plugin
+export { SlackPlugin } from './slack/SlackPlugin';
+export * from './slack/SlackAdapter';
+
 // DingTalk plugin
 export { DingTalkPlugin } from './dingtalk/DingTalkPlugin';

@@ -22,6 +22,10 @@ export type PluginStatus = 'created' | 'initializing' | 'ready' | 'starting' | '
 export interface IPluginCredentials {
   // Telegram
   token?: string;
+  // Slack
+  botToken?: string;
+  appToken?: string;
+  signingSecret?: string;
   // Lark/Feishu
   appId?: string;
   appSecret?: string;
@@ -40,6 +44,7 @@ export function hasPluginCredentials(type: PluginType, credentials?: IPluginCred
   if (!credentials) return false;
   if (type === 'lark') return !!(credentials.appId && credentials.appSecret);
   if (type === 'dingtalk') return !!(credentials.clientId && credentials.clientSecret);
+  if (type === 'slack') return !!(credentials.botToken && credentials.appToken);
   return !!credentials.token;
 }
 
