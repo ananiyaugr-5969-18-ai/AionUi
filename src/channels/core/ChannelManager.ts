@@ -12,6 +12,7 @@ import { PluginManager, registerPlugin } from '../gateway/PluginManager';
 import { PairingService } from '../pairing/PairingService';
 import { DingTalkPlugin } from '../plugins/dingtalk/DingTalkPlugin';
 import { LarkPlugin } from '../plugins/lark/LarkPlugin';
+import { SlackPlugin } from '../plugins/slack/SlackPlugin';
 import { TelegramPlugin } from '../plugins/telegram/TelegramPlugin';
 import { resolveChannelConvType } from '../types';
 import type { IChannelPluginConfig, PluginType } from '../types';
@@ -47,6 +48,7 @@ export class ChannelManager {
     // Private constructor for singleton pattern
     // Register available plugins
     registerPlugin('telegram', TelegramPlugin);
+    registerPlugin('slack', SlackPlugin);
     registerPlugin('lark', LarkPlugin);
     registerPlugin('dingtalk', DingTalkPlugin);
   }

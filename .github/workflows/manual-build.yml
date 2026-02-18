@@ -1,0 +1,132 @@
+name: Manual Build for Testing
+
+# This workflow can be manually triggered to build the app for specific platforms
+# Useful for testing PRs or creating test builds
+
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: 'Platform to  build'
+        required: true
+        default: 'windows-x64'
+        type: choice
+        options:
+          - windows-x64
+          - windows-arm64
+          - macos-arm64
+          - macos-x64
+          - linux
+          - all
+      ref:
+        description: 'Branch or tag to build (e.g., copilot/add-slack-support)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  build:
+    name: Build ${{ matrix.platform }}
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: 'windows-x64'
+            os: 'windows-2022'
+            command: 'node scripts/build-with-builder.js x64 --win --x64'
+            artifact-name: 'windows-build-x64'
+          - platform: 'windows-arm64'
+            os: 'windows-2022'
+            command: 'node scripts/build-with-builder.js arm64 --win --arm64'
+            artifact-name: 'windows-build-arm64'
+          - platform: 'macos-arm64'
+            os: 'macos-14'
+            command: 'node scripts/build-with-builder.js arm64 --mac --arm64'
+            artifact-name: 'macos-build-arm64'
+          - platform: 'macos-x64'
+            os: 'macos-14'
+            command: 'node scripts/build-with-builder.js x64 --mac --x64'
+            artifact-name: 'macos-build-x64'
+          - platform: 'linux'
+            os: 'ubuntu-latest'
+            command: 'npm run dist:linux'
+            artifact-name: 'linux-build'
+
+    steps:
+      - name: Check if should run
+        id: should-run
+        run: |
+          if [[ "${{ inputs.platform }}" == "${{ matrix.platform }}" ]] || [[ "${{ inputs.platform }}" == "all" ]]; then
+            echo "skip=false" >> $GITHUB_OUTPUT
+          else
+            echo "skip=true" >> $GITHUB_OUTPUT
+          fi
+        shell: bash
+
+      - name: Checkout code
+        if: steps.should-run.outputs.skip != 'true'
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+
+      - name: Setup Node.js
+        if: steps.should-run.outputs.skip != 'true'
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        if: steps.should-run.outputs.skip != 'true'
+        run: npm ci
+
+      - name: Build application
+        if: steps.should-run.outputs.skip != 'true'
+        run: ${{ matrix.command }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifacts
+        if: steps.should-run.outputs.skip != 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact-name }}
+          path: |
+            out/*.exe
+            out/*.msi
+            out/*.zip
+            out/*.dmg
+            out/*.deb
+            out/*.AppImage
+          retention-days: 7
+          if-no-files-found: warn
+
+      - name: Comment on PR with download link
+        if: steps.should-run.outputs.skip != 'true' && github.event_name == 'workflow_dispatch' && github.event.pull_request
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const artifactName = '${{ matrix.artifact-name }}';
+            const platform = '${{ matrix.platform }}';
+            const runId = context.runId;
+            const repo = context.repo;
+            
+            const comment = `### 🎉 Build Complete for ${platform}
+            
+            Your test build is ready! Download the artifacts from:
+            https://github.com/${repo.owner}/${repo.repo}/actions/runs/${runId}
+            
+            **Artifact name:** ${artifactName}
+            
+            The artifacts will be available for 7 days.`;
+            
+            github.rest.issues.createComment({
+              ...repo,
+              issue_number: context.issue.number,
+              body: comment
+            });
