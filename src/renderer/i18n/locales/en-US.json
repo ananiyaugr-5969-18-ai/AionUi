@@ -1334,5 +1334,13 @@
       "configureFirst": "Please configure an agent in Settings first.",
       "switching": "Switching agent..."
     }
-  }
+  },
+  "guid.dashboard.agentHistory": "Agent History",
+  "guid.dashboard.configuration": "Configuration",
+  "guid.dashboard.followUpAgent": "Follow-up Agent",
+  "guid.dashboard.followUpDescription": "This agent sends personalized follow-up emails, meeting reminders, and summaries so every lead gets the right next step.",
+  "guid.dashboard.suggestedPrompt": "Today's suggested prompt",
+  "guid.dashboard.promptClientCalls": "Summarize yesterday's client calls and list high-priority follow-up actions.",
+  "guid.dashboard.promptFollowUpEmail": "Send a follow-up email to all leads who requested pricing details this week.",
+  "guid.dashboard.promptPersonalizedMeetings": "Create personalized follow-up meeting suggestions for active opportunities."
 }

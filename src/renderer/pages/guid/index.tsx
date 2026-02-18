@@ -1414,6 +1414,8 @@ const Guid: React.FC = () => {
     });
   }, [modelList]);
 
+  const dashboardPromptCards = useMemo(() => [t('guid.dashboard.promptClientCalls'), t('guid.dashboard.promptFollowUpEmail'), t('guid.dashboard.promptPersonalizedMeetings')], [t]);
+
   // 打字机效果 / Typewriter effect
   useEffect(() => {
     const fullText = t('conversation.welcome.placeholder');
@@ -1451,7 +1453,42 @@ const Guid: React.FC = () => {
     <ConfigProvider getPopupContainer={() => guidContainerRef.current || document.body}>
       <div ref={guidContainerRef} className={styles.guidContainer}>
         <div className={styles.guidLayout}>
-          <p className={`text-2xl font-semibold mb-8 text-0 text-center`}>{t('conversation.welcome.title')}</p>
+          <div className={styles.workspaceHeaderRow}>
+            <Button shape='round' className={styles.workspaceHeaderPill}>
+              {t('guid.dashboard.agentHistory')}
+            </Button>
+            <Button shape='round' className={styles.workspaceHeaderPill}>
+              {t('guid.dashboard.configuration')}
+            </Button>
+          </div>
+
+          <div className={styles.agentHero}>
+            <div className={styles.agentHeroIcon} aria-hidden='true'>
+              {Array.from({ length: 12 }).map((_, index) => (
+                <span key={index} className={styles.agentHeroPixel} />
+              ))}
+            </div>
+            <p className={styles.agentHeroTitle}>{t('guid.dashboard.followUpAgent')}</p>
+            <p className={styles.agentHeroDescription}>{t('guid.dashboard.followUpDescription')}</p>
+            <p className={styles.agentHeroSubLabel}>{t('guid.dashboard.suggestedPrompt')}</p>
+          </div>
+
+          <div className={styles.promptCardGrid}>
+            {dashboardPromptCards.map((prompt, index) => (
+              <button
+                key={prompt}
+                type='button'
+                className={styles.promptCard}
+                onClick={() => {
+                  setInput(prompt);
+                  handleTextareaFocus();
+                }}
+              >
+                <span className={styles.promptCardIcon}>{index + 1}</span>
+                <span>{prompt}</span>
+              </button>
+            ))}
+          </div>
 
           {/* Agent 选择器 - 在标题下方 */}
           {availableAgents && availableAgents.length > 0 && (

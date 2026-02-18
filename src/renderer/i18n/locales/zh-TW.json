@@ -1121,5 +1121,13 @@
       "configureFirst": "請先在設定中配置一個 Agent。",
       "switching": "正在切換 Agent..."
     }
-  }
+  },
+  "guid.dashboard.agentHistory": "Agent 歷史",
+  "guid.dashboard.configuration": "配置",
+  "guid.dashboard.followUpAgent": "跟進 Agent",
+  "guid.dashboard.followUpDescription": "這個 Agent 會發送個人化跟進郵件、會議提醒與摘要，幫助每個線索推進到下一步。",
+  "guid.dashboard.suggestedPrompt": "今日建議提示詞",
+  "guid.dashboard.promptClientCalls": "總結昨天的客戶通話並列出高優先級跟進行動。",
+  "guid.dashboard.promptFollowUpEmail": "向本週索取報價詳情的所有線索發送跟進郵件。",
+  "guid.dashboard.promptPersonalizedMeetings": "為活躍商機建立個人化的後續會議建議。"
 }
