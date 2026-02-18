@@ -6,6 +6,7 @@ AionUi supports WebUI mode, allowing you to access the application through a web
 
 - [What is WebUI Mode?](#what-is-webui-mode)
 - [View All UI Pages (Development)](#view-all-ui-pages-development)
+- [Screenshots + Windows EXE (Local Test Pack)](#screenshots--windows-exe-local-test-pack)
 - [Windows](#windows)
 - [macOS](#macos)
 - [Linux](#linux)
@@ -68,6 +69,48 @@ AionUi uses hash routes (`/#/...`). After login, you can visit:
 - `/#/test/components` - Components showcase (UI test page)
 
 If not authenticated, routes redirect to `/#/login`.
+
+---
+
+## Screenshots + Windows EXE (Local Test Pack)
+
+If you want a complete local test pack (all page screenshots + `.exe`):
+
+### 1) Capture screenshots of major pages
+
+1. Start WebUI:
+
+```bash
+npm ci
+npm run webui
+```
+
+2. Open `http://localhost:3000` and log in.
+3. Visit each page route listed above and capture screenshots (browser full-page screenshot is recommended).
+4. Save files using clear names, for example:
+   - `01-guid.png`
+   - `02-settings-gemini.png`
+   - `03-settings-model.png`
+   - `04-settings-agent.png`
+   - `05-settings-display.png`
+   - `06-settings-webui.png`
+   - `07-settings-system.png`
+   - `08-settings-about.png`
+   - `09-settings-tools.png`
+   - `10-test-components.png`
+
+> Note: `/#/conversation/:id` requires an existing conversation id. Create a conversation from `/#/guid`, then capture that page.
+
+### 2) Build Windows `.exe` on your laptop
+
+Run these commands on a Windows machine:
+
+```powershell
+npm ci
+npm run dist:win
+```
+
+Build artifacts are generated in the project `out/` directory (including the installer `.exe` produced by electron-builder).
 
 ---
 
